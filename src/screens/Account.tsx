@@ -27,7 +27,7 @@ export function Account() {
   return (
     <View>
       {currentFeed.map(feed => (
-        <CustomText key={feed.book_title}>{feed.book_title}</CustomText>
+        <CustomText>{feed.book_title}</CustomText>
       ))}
     </View>
   );
