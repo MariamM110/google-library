@@ -2,19 +2,12 @@ import * as React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {CustomText} from '../components/Text';
-import {View} from 'react-native';
+import {Image, FlatList, View} from 'react-native';
 import {API_KEY} from '@env';
-
-interface Book {
-  // Define the structure of a book here based on the API response
-  // For example:
-  title: string;
-  author: string;
-  // ... other properties
-}
+import {Book, NYTResp} from '../types';
 
 export function Feed() {
-  const [currentFeed, setCurrentFeed] = useState([]);
+  const [currentFeed, setCurrentFeed] = useState<Book[]>([]);
 
   useEffect(() => {
     const apiUrl =
@@ -22,25 +15,16 @@ export function Feed() {
 
     const fetchData = async () => {
       try {
-        const {data} = await axios.get(apiUrl + API_KEY);
-        const allBooks = [];
+        const response = await axios.get<NYTResp>(apiUrl + API_KEY);
+        const lists = response.data.results.lists;
 
-        data.lists.array.forEach(element => {
-          console.log('hi');
-        });
+        const allBooks = lists
+          .map(list => {
+            return list.books;
+          })
+          .flat();
 
-        // data?.lists?.map(list => {
-        //   allBooks.push(list);
-        //   list?.books?.forEach(book => {
-        //     allBooks.push({
-        //       title: book.title,
-        //       author: book.author,
-        //     });
-        //   });
-        // });
-
-        setCurrentFeed(data);
-        // setCurrentFeed(allBooks);
+        setCurrentFeed(allBooks);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -49,21 +33,20 @@ export function Feed() {
     fetchData();
   }, []);
 
-  //   console.log(currentFeed);
   return (
-    <View>
-      {/* {currentFeed.map(book => (
-        <CustomText key={book.title}>{book.title}</CustomText>
-      ))} */}
-    </View>
+    <FlatList
+      data={currentFeed}
+      keyExtractor={(item, index) => `${item.primary_isbn10}-${index}`}
+      renderItem={({item}) => (
+        <View style={{backgroundColor: 'red', marginBottom: 10}}>
+          <CustomText>{item.title}</CustomText>
+          <CustomText>{item.author}</CustomText>
+          <Image
+            source={{uri: item.book_image}}
+            style={{width: 100, height: 150}}
+          />
+        </View>
+      )}
+    />
   );
 }
-
-// async componentDidMount() {
-//   try {
-//     const { data } = await axios.get('https://api.example.com/data');
-//     this.setState({ data });
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// }
