@@ -2,12 +2,12 @@ import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 
 import {theme} from '../utils/themes';
+import {CustomText} from '../components/Text';
 
 export function Welcome({navigation}) {
   return (
@@ -16,14 +16,14 @@ export function Welcome({navigation}) {
       source={require('../../assets/img/girl-reading.jpg')}
       style={styles.img}>
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome!</Text>
-        <Text style={styles.subText}>
+        <CustomText style={styles.title}>Welcome!</CustomText>
+        <CustomText style={styles.subCustomText}>
           Turn to the next page to see what book is the hot topic of today!
-        </Text>
+        </CustomText>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Detail')}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <CustomText style={styles.buttonCustomText}>Continue</CustomText>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     color: theme.colourPrimaryGreen,
     marginTop: 20,
   },
-  subText: {
+  subCustomText: {
     fontSize: 16,
     color: theme.colourPrimaryGreen,
     marginTop: 12,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     width: '100%',
   },
-  buttonText: {
+  buttonCustomText: {
     fontSize: 16,
     color: theme.colourWhite,
     fontWeight: '700',
