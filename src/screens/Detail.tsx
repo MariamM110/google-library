@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DetailHome} from './DetailHome';
+import {FeedStacks} from './FeedStacks';
 import {Search} from './Search';
 import {Bookmark} from './Bookmark';
 import {Account} from './Account';
@@ -14,7 +14,7 @@ export function DetailScreen() {
     <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="Home"
-        component={DetailHome}
+        component={FeedStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({color, size}) => (
