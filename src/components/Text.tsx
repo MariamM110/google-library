@@ -1,11 +1,12 @@
 import React from 'react';
 import {Text as RNText, StyleSheet, TextInputProps} from 'react-native';
+import {theme} from '../utils/themes';
 
 type Props = TextInputProps & {
   fontWeight?: '500' | '700';
 };
 
-export const CustomText: React.FC<Props> = ({
+export const Text: React.FC<Props> = ({
   style,
   children,
   fontWeight = '500',

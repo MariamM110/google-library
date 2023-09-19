@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 
 import {theme} from '../utils/themes';
-import {CustomText} from '../components/Text';
+import {Text} from '../components/Text';
+import {TouchableButton} from '../components/Button';
 
 export function Welcome({navigation}) {
   return (
@@ -16,15 +12,15 @@ export function Welcome({navigation}) {
       source={require('../../assets/img/girl-reading.jpg')}
       style={styles.img}>
       <View style={styles.container}>
-        <CustomText style={styles.title}>Welcome!</CustomText>
-        <CustomText style={styles.subCustomText}>
+        <Text style={styles.title}>Welcome!</Text>
+        <Text style={styles.subText}>
           Turn to the next page to see what book is the hot topic of today!
-        </CustomText>
-        <TouchableOpacity
-          style={styles.button}
+        </Text>
+        <TouchableButton
+          style={styles.TouchableButton}
           onPress={() => navigation.navigate('Detail')}>
-          <CustomText style={styles.buttonCustomText}>Continue</CustomText>
-        </TouchableOpacity>
+          <Text style={styles.TouchableButtonText}>Continue</Text>
+        </TouchableButton>
       </View>
     </ImageBackground>
   );
@@ -48,25 +44,20 @@ const styles = StyleSheet.create({
     color: theme.colourPrimaryGreen,
     marginTop: 20,
   },
-  subCustomText: {
+  subText: {
     fontSize: 16,
     color: theme.colourPrimaryGreen,
     marginTop: 12,
   },
-  button: {
-    padding: 10,
+  TouchableButton: {
     marginTop: 12,
-    backgroundColor: theme.colourDarkerGreen,
-    elevation: 8,
     borderBottomLeftRadius: 25,
     borderTopLeftRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
     width: '100%',
   },
-  buttonCustomText: {
+  TouchableButtonText: {
     fontSize: 16,
-    color: theme.colourWhite,
     fontWeight: '700',
+    color: theme.colourWhite,
   },
 });

@@ -1,11 +1,17 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, View} from 'react-native';
-import {CustomText} from '../components/Text';
+import {Text} from '../components/Text';
 import {Feed} from './Feed';
 import {Provider} from '../context';
+import {Book} from './BookDetail';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Feed: undefined;
+  Book: {book: object};
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function FeedStacks() {
   return (
@@ -15,19 +21,12 @@ export function FeedStacks() {
         component={Feed}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Book"
+        component={Book}
+        options={{headerShown: false}}
+        initialParams={{book: Book}}
+      />
     </Stack.Navigator>
   );
 }
-
-// const styles = StyleSheet.create({
-//   text: {
-//     color: 'red',
-//   },
-// });
-
-//add a stack here to show the different pages that will be used to navigate through the tab
-// <View>
-//   <CustomText fontWeight="500" style={styles.text}>
-//     Hello
-//   </CustomText>
-// </View>
