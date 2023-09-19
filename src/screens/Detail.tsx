@@ -5,22 +5,33 @@ import {Search} from './Search';
 import {Bookmark} from './Bookmark';
 import {Account} from './Account';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {theme} from '../utils/themes';
 
 const Tab = createBottomTabNavigator();
 
 export function DetailScreen() {
   //make sure to pass the prop in the function to be able to use it
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarStyle: {
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          backgroundColor: theme.colourPrimaryGreen,
+        },
+      }}>
       <Tab.Screen
         name="Home"
         component={FeedStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({focused, size}) => (
             <MaterialCommunityIcons
-              name="sofa-single-outline"
-              color={color}
+              name={focused ? 'sofa-single' : 'sofa-single-outline'}
+              color={theme.colourWhite}
               size={size}
             />
           ),
@@ -31,8 +42,12 @@ export function DetailScreen() {
         component={Search}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="magnify" color={color} size={size} />
+          tabBarIcon: ({focused, size}) => (
+            <MaterialCommunityIcons
+              name="magnify"
+              color={theme.colourWhite}
+              size={focused ? size + 4 : size}
+            />
           ),
         }}
       />
@@ -41,10 +56,10 @@ export function DetailScreen() {
         component={Bookmark}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({focused, size}) => (
             <MaterialCommunityIcons
-              name="bookmark-outline"
-              color={color}
+              name={focused ? 'bookmark' : 'bookmark-outline'}
+              color={theme.colourWhite}
               size={size}
             />
           ),
@@ -55,10 +70,10 @@ export function DetailScreen() {
         component={Account}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({focused, size}) => (
             <MaterialCommunityIcons
-              name="account-outline"
-              color={color}
+              name={focused ? 'account' : 'account-outline'}
+              color={theme.colourWhite}
               size={size}
             />
           ),

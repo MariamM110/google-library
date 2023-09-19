@@ -2,7 +2,7 @@ import React from 'react';
 import {Text as RNText, StyleSheet, TextInputProps} from 'react-native';
 
 type Props = TextInputProps & {
-  fontWeight?: '500' | '800';
+  fontWeight?: '500' | '700';
 };
 
 export const CustomText: React.FC<Props> = ({
@@ -20,6 +20,6 @@ export const CustomText: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   text: {
-    color: 'green',
+    fontFamily: 'Sono',
   },
 });
