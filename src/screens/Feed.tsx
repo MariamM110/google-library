@@ -10,11 +10,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {API_KEY} from '@env';
-import {Book, NYTResp} from '../types';
+import {Book, NYTResp} from '../nytTypes';
 import {theme} from '../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import type {FeedTabScreenProps} from '../types';
 
-export function Feed({navigation}) {
+export function Feed({navigation}: FeedTabScreenProps<'FeedPage'>) {
   const [currentFeed, setCurrentFeed] = useState<Book[]>([]);
 
   useEffect(() => {

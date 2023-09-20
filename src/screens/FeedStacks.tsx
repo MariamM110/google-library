@@ -1,31 +1,45 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../components/Text';
 import {Feed} from './Feed';
-import {Provider} from '../context';
 import {Book} from './BookDetail';
+import {theme} from '../utils/themes';
 
-type RootStackParamList = {
-  Feed: undefined;
-  Book: {book: object};
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 export function FeedStacks() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Feed"
+        name="FeedPage"
         component={Feed}
-        options={{headerShown: false}}
+        options={{
+          title: 'Bookgram',
+          headerBackVisible: false,
+          headerStyle: {
+            backgroundColor: theme.colourPrimaryGreen,
+          },
+          headerTitleStyle: {
+            fontFamily: 'Special Elite',
+            fontSize: 25,
+            color: theme.colourWhite,
+          },
+        }}
       />
       <Stack.Screen
         name="Book"
         component={Book}
-        options={{headerShown: false}}
-        initialParams={{book: Book}}
+        options={({route}) => ({
+          title: route.params ? route.params.book.title : 'Bookgram',
+          headerBackVisible: false,
+          headerStyle: {
+            backgroundColor: theme.colourPrimaryGreen,
+          },
+          headerTitleStyle: {
+            fontFamily: 'Special Elite',
+            fontSize: 25,
+            color: theme.colourWhite,
+          },
+        })}
       />
     </Stack.Navigator>
   );

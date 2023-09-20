@@ -9,11 +9,10 @@ import {theme} from '../utils/themes';
 
 const Tab = createBottomTabNavigator();
 
-export function DetailScreen() {
-  //make sure to pass the prop in the function to be able to use it
+export function TabsNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Feed"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -24,7 +23,7 @@ export function DetailScreen() {
         },
       }}>
       <Tab.Screen
-        name="Home"
+        name="FeedS"
         component={FeedStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components

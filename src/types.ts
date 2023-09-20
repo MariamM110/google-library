@@ -1,69 +1,68 @@
-export interface NYTResp {
-  status: string;
-  copyright: string;
-  num_results: number;
-  results: Results;
-}
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export interface Results {
-  bestsellers_date: Date;
-  published_date: Date;
-  published_date_description: string;
-  previous_published_date: Date;
-  next_published_date: string;
-  lists: List[];
-}
+export type RootStackParamList = {
+  Tabs: NavigatorScreenParams<BottomTabParams>;
+  Welcome: undefined;
+};
 
-export interface List {
-  list_id: number;
-  list_name: string;
-  list_name_encoded: string;
-  display_name: string;
-  updated: string;
-  list_image: null;
-  list_image_width: null;
-  list_image_height: null;
-  books: Book[];
-}
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;
 
-export interface Book {
-  age_group: string;
-  amazon_product_url: string;
-  article_chapter_link: string;
-  author: string;
-  book_image: string;
-  book_image_width: number;
-  book_image_height: number;
-  book_review_link: string;
-  book_uri: string;
-  contributor: string;
-  contributor_note: string;
-  created_date: Date;
-  description: string;
-  first_chapter_link: string;
-  price: string;
-  primary_isbn10: string;
-  primary_isbn13: string;
-  publisher: string;
-  rank: number;
-  rank_last_week: number;
-  sunday_review_link: string;
-  title: string;
-  updated_date: Date;
-  weeks_on_list: number;
-  buy_links: BuyLink[];
-}
+export type BottomTabParams = {
+  Feed: NavigatorScreenParams<FeedTabParams>;
+  Search: NavigatorScreenParams<SearchTabParams>;
+  Bookmark: NavigatorScreenParams<BookmarkTabParams>;
+  Account: NavigatorScreenParams<AccountTabsParams>;
+};
 
-export interface BuyLink {
-  name: Name;
-  url: string;
-}
+export type FeedTabParams = {
+  FeedPage: undefined;
+  Book: {book: object};
+};
 
-export enum Name {
-  Amazon = 'Amazon',
-  AppleBooks = 'Apple Books',
-  BarnesAndNoble = 'Barnes and Noble',
-  BooksAMillion = 'Books-A-Million',
-  Bookshop = 'Bookshop',
-  IndieBound = 'IndieBound',
+export type FeedTabScreenProps<T extends keyof FeedTabParams> =
+  CompositeScreenProps<
+    BottomTabScreenProps<FeedTabParams, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+export type SearchTabParams = {
+  Search: undefined;
+};
+
+export type SearchTabScreenProps<T extends keyof SearchTabParams> =
+  CompositeScreenProps<
+    BottomTabScreenProps<SearchTabParams, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+export type BookmarkTabParams = {
+  Bookmark: undefined;
+};
+
+export type BookmarkTabScreenProps<T extends keyof BookmarkTabParams> =
+  CompositeScreenProps<
+    BottomTabScreenProps<BookmarkTabParams, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+export type AccountTabsParams = {
+  Account: undefined;
+};
+
+export type AccountTabScreenProps<T extends keyof AccountTabsParams> =
+  CompositeScreenProps<
+    BottomTabScreenProps<AccountTabsParams, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
 }

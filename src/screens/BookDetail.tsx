@@ -2,20 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {Text} from '../components/Text';
-import {
-  Button,
-  Image,
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Image, ScrollView, TouchableWithoutFeedback, View} from 'react-native';
 import {TouchableButton} from '../components/Button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../utils/themes';
 import {StyleSheet} from 'react-native';
 import {GoogleBook, Item} from '../bookTypes';
+import type {FeedTabScreenProps} from '../types';
 
-export function Book({navigation, route}) {
+export function Book({navigation, route}: FeedTabScreenProps<'Book'>) {
   const {book} = route.params;
   const [currentBook, setCurrentBook] = useState<Item[]>([]);
   const [touchableButtonState, setTouchableButtonState] = useState(true);
@@ -107,8 +102,7 @@ export function Book({navigation, route}) {
           <TouchableWithoutFeedback
             onPress={() => setTouchableButtonState(false)}>
             <Text
-              style={touchableButtonState ? styles.unFocused : styles.focused}
-              s>
+              style={touchableButtonState ? styles.unFocused : styles.focused}>
               Comments
             </Text>
           </TouchableWithoutFeedback>

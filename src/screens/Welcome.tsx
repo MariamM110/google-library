@@ -1,11 +1,11 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, View} from 'react-native';
-
 import {theme} from '../utils/themes';
 import {Text} from '../components/Text';
 import {TouchableButton} from '../components/Button';
+import type {RootStackScreenProps} from '../types';
 
-export function Welcome({navigation}) {
+export function Welcome({navigation}: RootStackScreenProps<'Welcome'>) {
   return (
     <ImageBackground
       resizeMode="cover"
@@ -18,7 +18,7 @@ export function Welcome({navigation}) {
         </Text>
         <TouchableButton
           style={styles.TouchableButton}
-          onPress={() => navigation.navigate('Detail')}>
+          onPress={() => navigation.navigate('Tabs')}>
           <Text style={styles.TouchableButtonText}>Continue</Text>
         </TouchableButton>
       </View>
