@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import {CustomText} from '../components/Text';
+import {Text} from '../components/Text';
 import {View} from 'react-native';
 import {API_KEY} from '@env';
 
@@ -27,11 +27,11 @@ export function Account() {
   return (
     // <View>
     //   {currentFeed.map(feed => (
-    //     <CustomText>{feed.book_title}</CustomText>
+    //     <Text>{feed.book_title}</Text>
     //   ))}
     // </View>
     <View>
-      <CustomText>Account</CustomText>
+      <Text>Account</Text>
     </View>
   );
 }

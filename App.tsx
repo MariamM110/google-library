@@ -5,6 +5,10 @@ import {Welcome} from './src/screens/Welcome';
 import {DetailScreen} from './src/screens/Detail';
 import {theme} from './src/utils/themes';
 
+type RootStackParamList = {
+  Home: undefined;
+};
+
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -24,8 +28,6 @@ function App() {
             headerBackVisible: false,
             headerStyle: {
               backgroundColor: theme.colourPrimaryGreen,
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
             },
             headerTitleStyle: {
               fontFamily: 'Special Elite',

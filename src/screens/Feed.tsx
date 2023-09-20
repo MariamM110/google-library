@@ -1,14 +1,20 @@
 import * as React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import {CustomText} from '../components/Text';
-import {Image, FlatList, View, StyleSheet} from 'react-native';
+import {Text} from '../components/Text';
+import {
+  Image,
+  FlatList,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {API_KEY} from '@env';
 import {Book, NYTResp} from '../types';
 import {theme} from '../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export function Feed() {
+export function Feed({navigation}) {
   const [currentFeed, setCurrentFeed] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -40,14 +46,18 @@ export function Feed() {
       data={currentFeed}
       keyExtractor={(item, index) => `${item.primary_isbn10}-${index}`}
       renderItem={({item}) => (
-        <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => {
+            navigation.navigate('Book', {book: item});
+          }}>
           <Image source={{uri: item.book_image}} style={styles.img} />
           <View style={styles.column}>
             <View>
-              <CustomText fontWeight="700" style={styles.textTitle}>
+              <Text fontWeight="700" style={styles.textTitle}>
                 {item.title}
-              </CustomText>
-              <CustomText>{item.author}</CustomText>
+              </Text>
+              <Text>{item.author}</Text>
             </View>
             <View style={styles.icons}>
               <MaterialCommunityIcons name="heart-outline" size={20} />
@@ -55,7 +65,7 @@ export function Feed() {
               <MaterialCommunityIcons name="bookmark-outline" size={20} />
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );
