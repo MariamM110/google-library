@@ -4,9 +4,10 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type {Book} from './nytTypes';
 
 export type RootStackParamList = {
-  Tabs: NavigatorScreenParams<BottomTabParams>;
+  Tabs?: NavigatorScreenParams<BottomTabParams>;
   Welcome: undefined;
 };
 
@@ -22,7 +23,7 @@ export type BottomTabParams = {
 
 export type FeedTabParams = {
   FeedPage: undefined;
-  Book: {book: object};
+  Book: {book: Book};
 };
 
 export type FeedTabScreenProps<T extends keyof FeedTabParams> =

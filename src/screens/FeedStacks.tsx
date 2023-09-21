@@ -3,8 +3,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Feed} from './Feed';
 import {Book} from './BookDetail';
 import {theme} from '../utils/themes';
+import {FeedTabParams} from '../types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<FeedTabParams>();
 
 export function FeedStacks() {
   return (
@@ -29,8 +30,10 @@ export function FeedStacks() {
         name="Book"
         component={Book}
         options={({route}) => ({
-          title: route.params ? route.params.book.title : 'Bookgram',
-          headerBackVisible: false,
+          title: route.params.book.title,
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+          headerTintColor: theme.colourWhite,
           headerStyle: {
             backgroundColor: theme.colourPrimaryGreen,
           },
@@ -39,6 +42,7 @@ export function FeedStacks() {
             fontSize: 25,
             color: theme.colourWhite,
           },
+          contentStyle: {backgroundColor: theme.colourWhite},
         })}
       />
     </Stack.Navigator>

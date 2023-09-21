@@ -5,7 +5,9 @@ import {Text} from '../components/Text';
 import {TouchableButton} from '../components/Button';
 import type {RootStackScreenProps} from '../types';
 
-export function Welcome({navigation}: RootStackScreenProps<'Welcome'>) {
+type Props = RootStackScreenProps<'Welcome'>;
+
+export const Welcome: React.FC<Props> = ({navigation}) => {
   return (
     <ImageBackground
       resizeMode="cover"
@@ -24,7 +26,7 @@ export function Welcome({navigation}: RootStackScreenProps<'Welcome'>) {
       </View>
     </ImageBackground>
   );
-}
+};
 
 const styles = StyleSheet.create({
   img: {

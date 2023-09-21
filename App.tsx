@@ -3,9 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Welcome} from './src/screens/Welcome';
 import {TabsNavigator} from './src/screens/Tabs';
-import {theme} from './src/utils/themes';
+import {RootStackParamList} from './src/types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (

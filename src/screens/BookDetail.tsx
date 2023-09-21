@@ -3,17 +3,20 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {Text} from '../components/Text';
 import {Image, ScrollView, TouchableWithoutFeedback, View} from 'react-native';
-import {TouchableButton} from '../components/Button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../utils/themes';
 import {StyleSheet} from 'react-native';
 import {GoogleBook, Item} from '../bookTypes';
 import type {FeedTabScreenProps} from '../types';
 
-export function Book({navigation, route}: FeedTabScreenProps<'Book'>) {
+type Props = FeedTabScreenProps<'Book'>;
+
+export const Book: React.FC<Props> = ({route}) => {
   const {book} = route.params;
   const [currentBook, setCurrentBook] = useState<Item[]>([]);
-  const [touchableButtonState, setTouchableButtonState] = useState(true);
+  const [contentType, setContentType] = useState<'description' | 'comments'>(
+    'description',
+  );
 
   useEffect(() => {
     const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.primary_isbn13}`;
@@ -28,6 +31,7 @@ export function Book({navigation, route}: FeedTabScreenProps<'Book'>) {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const date = new Date(currentBook[0]?.volumeInfo.publishedDate);
@@ -47,84 +51,96 @@ export function Book({navigation, route}: FeedTabScreenProps<'Book'>) {
     return n + ord;
   }
 
-  return (
-    <View>
-      <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <View style={styles.viewContainer}>
-            <TouchableButton
-              style={styles.TouchableButton}
-              onPress={() => navigation.goBack()}>
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={20}
-                color={theme.colourWhite}
+  const renderHeader = React.useCallback(() => {
+    return (
+      <>
+        <View style={styles.headerContainer}>
+          <View style={styles.topContainer}>
+            <View style={styles.viewContainer}>
+              <Text fontWeight="700" style={styles.title}>
+                {book.title}
+              </Text>
+              <Text style={styles.subText}>{book.author}</Text>
+              <Text style={styles.subText}>Published {year}</Text>
+              <Text style={styles.subText}>
+                Category: {currentBook[0]?.volumeInfo.categories}
+              </Text>
+            </View>
+            <View style={styles.shadowProp}>
+              <Image source={{uri: book.book_image}} style={styles.img} />
+            </View>
+          </View>
+          <View style={styles.iconsWrapper}>
+            <View style={styles.titleIcons}>
+              <Image
+                source={require('../../assets/img/top-three.png')}
+                style={styles.iconSize}
               />
-            </TouchableButton>
-            <Text fontWeight="700" style={styles.title}>
-              {book.title}
-            </Text>
-            <Text style={styles.subText}>{book.author}</Text>
-            <Text style={styles.subText}>Published {year}</Text>
-          </View>
-          <View style={styles.shadowProp}>
-            <Image source={{uri: book.book_image}} style={styles.img} />
-          </View>
-        </View>
-        <View style={styles.spaceAround}>
-          <View style={styles.titleIcons}>
-            <Image
-              source={require('../../assets/img/top-three.png')}
-              style={styles.iconSize}
-            />
-            <Text>{getOrdinal(book.rank)}</Text>
-          </View>
-          <Text style={styles.line}>|</Text>
-          <View style={styles.titleIcons}>
-            <MaterialCommunityIcons
-              name="note-text"
-              size={20}
-              color={theme.colourFreshGreen}
-            />
-            <Text>{currentBook[0]?.volumeInfo.pageCount}</Text>
+              <Text>{getOrdinal(book.rank)}</Text>
+            </View>
+            <Text style={styles.line}>|</Text>
+            <View style={styles.titleIcons}>
+              <MaterialCommunityIcons
+                name="note-text"
+                size={20}
+                color={theme.colourFreshGreen}
+              />
+              <Text>{currentBook[0]?.volumeInfo.pageCount}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      <View>
-        <View style={styles.spaceAround}>
+        <View style={styles.buttonsWrapper}>
           <TouchableWithoutFeedback
-            onPress={() => setTouchableButtonState(true)}>
+            onPress={() => setContentType('description')}>
             <Text
-              style={touchableButtonState ? styles.focused : styles.unFocused}>
+              style={
+                contentType === 'description'
+                  ? styles.focused
+                  : styles.unFocused
+              }>
               Description
             </Text>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => setTouchableButtonState(false)}>
+
+          <TouchableWithoutFeedback onPress={() => setContentType('comments')}>
             <Text
-              style={touchableButtonState ? styles.unFocused : styles.focused}>
+              style={
+                contentType === 'comments' ? styles.focused : styles.unFocused
+              }>
               Comments
             </Text>
           </TouchableWithoutFeedback>
         </View>
-        <View style={styles.infoContainer}>
-          {touchableButtonState ? (
-            <ScrollView style={styles.descContainer}>
-              <Text>{currentBook[0]?.volumeInfo.description}</Text>
-            </ScrollView>
-          ) : (
-            <View>
-              <Text>Comments</Text>
-            </View>
-          )}
+      </>
+    );
+  }, [book, contentType, currentBook, year]);
+
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      stickyHeaderIndices={[0]}>
+      {renderHeader()}
+
+      {contentType === 'description' ? (
+        <View style={styles.descContainer}>
+          <Text>{currentBook[0]?.volumeInfo.description}</Text>
         </View>
-      </View>
-    </View>
+      ) : (
+        <View style={styles.descContainer}>
+          <Text>Comments</Text>
+        </View>
+      )}
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  contentContainer: {},
+  headerContainer: {
     backgroundColor: theme.colourLightGreen,
     padding: 10,
   },
@@ -132,18 +148,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  spaceAround: {
+  iconsWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20,
+    marginTop: 14,
+    marginBottom: 2,
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: theme.colourWhite,
+    paddingVertical: 20,
   },
   viewContainer: {
     flex: 1,
-  },
-  infoContainer: {
-    marginTop: 10,
-    alignSelf: 'center',
-    padding: 6,
   },
   TouchableButton: {
     width: 45,
@@ -166,6 +184,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 8,
+    marginTop: 30,
     color: theme.colourGrey,
   },
   subText: {
@@ -189,7 +208,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   descContainer: {
-    height: '50%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+
+    // flex: 1,
+    // height: '50%',
   },
   focused: {
     fontWeight: '800',

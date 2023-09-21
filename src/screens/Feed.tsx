@@ -15,7 +15,9 @@ import {theme} from '../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import type {FeedTabScreenProps} from '../types';
 
-export function Feed({navigation}: FeedTabScreenProps<'FeedPage'>) {
+type Props = FeedTabScreenProps<'FeedPage'>;
+
+export const Feed: React.FC<Props> = ({navigation}) => {
   const [currentFeed, setCurrentFeed] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export function Feed({navigation}: FeedTabScreenProps<'FeedPage'>) {
       )}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
