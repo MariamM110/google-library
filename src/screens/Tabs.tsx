@@ -6,14 +6,14 @@ import {Bookmark} from './Bookmark';
 import {Account} from './Account';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../utils/themes';
+import {BottomTabParams} from '../types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParams>();
 
-export function DetailScreen() {
-  //make sure to pass the prop in the function to be able to use it
+export function TabsNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Feed"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -24,7 +24,7 @@ export function DetailScreen() {
         },
       }}>
       <Tab.Screen
-        name="Home"
+        name="Feed"
         component={FeedStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components

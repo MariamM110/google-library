@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text as RNText, StyleSheet, TextInputProps} from 'react-native';
-import {theme} from '../utils/themes';
 
 type Props = TextInputProps & {
   fontWeight?: '500' | '700';
