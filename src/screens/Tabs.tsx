@@ -7,6 +7,7 @@ import {Account} from './Account';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../utils/themes';
 import {BottomTabParams} from '../types';
+import {SearchStacks} from './SearchStacks';
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
@@ -39,7 +40,7 @@ export function TabsNavigator() {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={SearchStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({focused, size}) => (

@@ -116,10 +116,7 @@ export const Book: React.FC<Props> = ({route}) => {
   }, [book, contentType, currentBook, year]);
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      stickyHeaderIndices={[0]}>
+    <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
       {renderHeader()}
 
       {contentType === 'description' ? (
@@ -139,9 +136,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  contentContainer: {},
   headerContainer: {
-    backgroundColor: theme.colourLightGreen,
+    backgroundColor: theme.colourBeigeP10,
     padding: 10,
   },
   topContainer: {
@@ -210,9 +206,6 @@ const styles = StyleSheet.create({
   descContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-
-    // flex: 1,
-    // height: '50%',
   },
   focused: {
     fontWeight: '800',
