@@ -76,18 +76,10 @@ export const SearchDetail: React.FC<Props> = ({route}) => {
   const renderFooter = React.useCallback(() => {
     return (
       <View style={styles.footer}>
-        <MaterialCommunityIcons
-          name="heart-outline"
-          size={20}
-          color={theme.colourWhite}
-        />
+        <MaterialCommunityIcons name="heart-outline" size={20} />
         <View style={styles.bookmarkWrapper}>
-          <Text style={styles.bookmarkText}>Add to bookmark</Text>
-          <MaterialCommunityIcons
-            name="bookmark"
-            size={20}
-            color={theme.colourWhite}
-          />
+          <Text>Add to bookmark</Text>
+          <MaterialCommunityIcons name="bookmark" size={20} />
         </View>
       </View>
     );
@@ -161,9 +153,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: theme.colourWhite,
-  },
-  bookmarkText: {
-    color: theme.colourWhite,
   },
 });

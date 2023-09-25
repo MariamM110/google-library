@@ -113,7 +113,7 @@ export const Search: React.FC<Props> = ({navigation}) => {
     }
     return authors;
   }
-
+  console.log();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchSection}>
@@ -131,6 +131,7 @@ export const Search: React.FC<Props> = ({navigation}) => {
           onChangeText={text => onSearch(text)}
           onSubmitEditing={handleSearch}
           clearButtonMode="always"
+          clearTextOnFocus
         />
       </View>
       <ScrollView
@@ -197,10 +198,8 @@ export const Search: React.FC<Props> = ({navigation}) => {
             />
             <View style={styles.categoryContainer}>
               <View style={styles.categoryTextContainer}>
-                <Text style={styles.categoryText}>{book.volumeInfo.title}</Text>
-                <Text style={styles.categoryText}>
-                  {formatAuthors(book.volumeInfo.authors)}
-                </Text>
+                <Text>{book.volumeInfo.title}</Text>
+                <Text>{formatAuthors(book.volumeInfo.authors)}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -283,9 +282,6 @@ const styles = StyleSheet.create({
   categoryTextContainer: {
     padding: 10,
     width: 160,
-  },
-  categoryText: {
-    color: theme.colourWhite,
   },
   booksContainer: {
     flex: 1,
