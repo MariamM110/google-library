@@ -10,11 +10,11 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {theme} from '../utils/themes';
+import {theme} from '../../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {SearchTabScreenProps} from '../types';
-import {Text} from '../components/Text';
-import type {GoogleBook, Item} from '../bookTypes';
+import {SearchTabScreenProps} from '../../types';
+import {Text} from '../../components/Text';
+import type {GoogleBook, Item} from '../../bookTypes';
 
 type Props = SearchTabScreenProps<'SearchPage'>;
 

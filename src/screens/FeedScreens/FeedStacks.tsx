@@ -2,8 +2,8 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Feed} from './Feed';
 import {Book} from './BookDetail';
-import {theme} from '../utils/themes';
-import {FeedTabParams} from '../types';
+import {theme} from '../../utils/themes';
+import {FeedTabParams} from '../../types';
 
 const Stack = createNativeStackNavigator<FeedTabParams>();
 

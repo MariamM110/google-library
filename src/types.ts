@@ -10,6 +10,7 @@ import type {Item} from './bookTypes';
 export type RootStackParamList = {
   Tabs?: NavigatorScreenParams<BottomTabParams>;
   Welcome: undefined;
+  Login: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

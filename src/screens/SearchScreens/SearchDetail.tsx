@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import type {SearchTabScreenProps} from '../types';
-import {Text} from '../components/Text';
-import {theme} from '../utils/themes';
+import type {SearchTabScreenProps} from '../../types';
+import {Text} from '../../components/Text';
+import {theme} from '../../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = SearchTabScreenProps<'Book'>;

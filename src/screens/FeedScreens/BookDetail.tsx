@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import {Text} from '../components/Text';
+import {Text} from '../../components/Text';
 import {Image, ScrollView, TouchableWithoutFeedback, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {theme} from '../utils/themes';
+import {theme} from '../../utils/themes';
 import {StyleSheet} from 'react-native';
-import {GoogleBook, Item} from '../bookTypes';
-import type {FeedTabScreenProps} from '../types';
+import {GoogleBook, Item} from '../../bookTypes';
+import type {FeedTabScreenProps} from '../../types';
 
 type Props = FeedTabScreenProps<'Book'>;
 
@@ -73,7 +73,7 @@ export const Book: React.FC<Props> = ({route}) => {
           <View style={styles.iconsWrapper}>
             <View style={styles.titleIcons}>
               <Image
-                source={require('../../assets/img/top-three.png')}
+                source={require('../../../assets/img/top-three.png')}
                 style={styles.iconSize}
               />
               <Text>{getOrdinal(book.rank)}</Text>

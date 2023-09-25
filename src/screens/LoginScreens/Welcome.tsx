@@ -1,9 +1,9 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, View} from 'react-native';
-import {theme} from '../utils/themes';
-import {Text} from '../components/Text';
-import {TouchableButton} from '../components/Button';
-import type {RootStackScreenProps} from '../types';
+import {theme} from '../../utils/themes';
+import {Text} from '../../components/Text';
+import {TouchableButton} from '../../components/Button';
+import type {RootStackScreenProps} from '../../types';
 
 type Props = RootStackScreenProps<'Welcome'>;
 
@@ -11,7 +11,7 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
   return (
     <ImageBackground
       resizeMode="cover"
-      source={require('../../assets/img/girl-reading.jpg')}
+      source={require('../../../assets/img/girl-reading.jpg')}
       style={styles.img}>
       <View style={styles.container}>
         <Text style={styles.title}>Welcome!</Text>
@@ -20,8 +20,8 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
         </Text>
         <TouchableButton
           style={styles.TouchableButton}
-          onPress={() => navigation.navigate('Tabs')}>
-          <Text style={styles.TouchableButtonText}>Continue</Text>
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.TouchableButtonText}>Login</Text>
         </TouchableButton>
       </View>
     </ImageBackground>
