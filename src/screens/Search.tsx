@@ -54,7 +54,6 @@ const beigeShades = [
 ];
 
 export const Search: React.FC<Props> = ({navigation}) => {
-  const [input, onChangeInput] = useState('');
   const [currentCategory, setCategory] = useState('Fiction');
   const [categoryBooks, setCurrentBooks] = useState<Item[]>([]);
   const [searched, setSearched] = useState<Item[]>([]);
@@ -79,30 +78,23 @@ export const Search: React.FC<Props> = ({navigation}) => {
     fetchData();
   }, [currentCategory]);
 
-  useEffect(() => {
-    // Only perform the search when isSearchTriggered is true
-    if (isSearchTriggered) {
-      const searchUrl = `https://www.googleapis.com/books/v1/volumes?q=${input}`;
-
-      const fetchData = async () => {
-        try {
-          const response = await axios.get<GoogleBook>(searchUrl);
-          setSearched(response.data.items);
-        } catch (error) {
-          console.log('Error fetching data:', error);
-        }
-      };
-
-      fetchData();
-
-      // Reset isSearchTriggered to false after performing the search
-      setSearchTriggered(false);
+  const onSearch = React.useCallback(async (keyWord: string) => {
+    if (!keyWord) {
+      setSearched([]);
+      return setSearchTriggered(false);
     }
-  }, [input, isSearchTriggered]);
+    const searchUrl = `https://www.googleapis.com/books/v1/volumes?q=${keyWord}`;
+    try {
+      const response = await axios.get<GoogleBook>(searchUrl);
+      setSearched(response.data.items);
+    } catch (error) {
+      console.log('Error fetching data:', error);
+      setSearched([]);
+    }
+  }, []);
 
-  // Handle the search trigger when the user hits enter
   const handleSearch = () => {
-    setSearchTriggered(true);
+    setSearchTriggered(!isSearchTriggered);
   };
 
   function ensureHttps(url: string) {
@@ -136,125 +128,84 @@ export const Search: React.FC<Props> = ({navigation}) => {
           style={styles.input}
           placeholder="Search"
           placeholderTextColor={theme.colourWhite}
-          value={input}
-          onChangeText={text => onChangeInput(text)}
+          onChangeText={text => onSearch(text)}
           onSubmitEditing={handleSearch}
+          clearButtonMode="always"
         />
       </View>
-      {isSearchTriggered ? (
-        <FlatList
-          data={searched}
-          keyExtractor={book => book.id}
-          vertical
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          style={styles.booksContainer}
-          contentContainerStyle={styles.booksContentContainer}
-          renderItem={({item: book}) => (
-            <TouchableOpacity
-              style={styles.categoryList}
-              onPress={() => navigation.navigate('Book', {book: book})}>
-              <Image
-                source={{
-                  uri: ensureHttps(book.volumeInfo.imageLinks.smallThumbnail),
-                }}
-                style={styles.img}
-              />
-              <View style={styles.categoryContainer}>
-                <View style={styles.categoryTextContainer}>
-                  <Text style={styles.categoryText}>
-                    {book.volumeInfo.title}
-                  </Text>
-                  <Text style={styles.categoryText}>
-                    {formatAuthors(book.volumeInfo.authors)}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      ) : (
-        <>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.tagsContainer}
-            contentContainerStyle={styles.tagsContentContainer}>
-            {categories.map((category, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleCategoryPress(category)}
-                style={
-                  category === currentCategory
-                    ? [
-                        styles.tagButton,
-                        {
-                          borderWidth: 2,
-                          borderColor: beigeShades[index % beigeShades.length],
-                        },
-                      ]
-                    : [
-                        styles.tagButton,
-                        {
-                          backgroundColor:
-                            beigeShades[index % beigeShades.length],
-                        },
-                      ]
-                }>
-                <Text
-                  style={
-                    category === currentCategory
-                      ? [
-                          styles.tagText,
-                          {
-                            color: beigeShades[index % beigeShades.length],
-                          },
-                        ]
-                      : [
-                          styles.tagText,
-                          {
-                            color: theme.colourWhite,
-                          },
-                        ]
-                  }>
-                  {category}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.tagsContainer}
+        contentContainerStyle={styles.tagsContentContainer}>
+        {categories.map((category, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleCategoryPress(category)}
+            style={
+              category === currentCategory
+                ? [
+                    styles.tagButton,
+                    {
+                      borderWidth: 2,
+                      borderColor: beigeShades[index % beigeShades.length],
+                    },
+                  ]
+                : [
+                    styles.tagButton,
+                    {
+                      backgroundColor: beigeShades[index % beigeShades.length],
+                    },
+                  ]
+            }>
+            <Text
+              style={
+                category === currentCategory
+                  ? [
+                      styles.tagText,
+                      {
+                        color: beigeShades[index % beigeShades.length],
+                      },
+                    ]
+                  : [
+                      styles.tagText,
+                      {
+                        color: theme.colourWhite,
+                      },
+                    ]
+              }>
+              {category}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <FlatList
+        data={isSearchTriggered ? searched : categoryBooks}
+        keyExtractor={book => book.id}
+        numColumns={2}
+        style={styles.booksContainer}
+        contentContainerStyle={styles.booksContentContainer}
+        renderItem={({item: book}) => (
+          <TouchableOpacity
+            style={styles.categoryList}
+            onPress={() => navigation.navigate('Book', {book: book})}>
+            <Image
+              source={{
+                uri: ensureHttps(book.volumeInfo.imageLinks.smallThumbnail),
+              }}
+              style={styles.img}
+            />
+            <View style={styles.categoryContainer}>
+              <View style={styles.categoryTextContainer}>
+                <Text style={styles.categoryText}>{book.volumeInfo.title}</Text>
+                <Text style={styles.categoryText}>
+                  {formatAuthors(book.volumeInfo.authors)}
                 </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-          <FlatList
-            data={categoryBooks}
-            keyExtractor={book => book.id}
-            vertical
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            style={styles.booksContainer}
-            contentContainerStyle={styles.booksContentContainer}
-            renderItem={({item: book}) => (
-              <TouchableOpacity
-                style={styles.categoryList}
-                onPress={() => navigation.navigate('Book', {book: book})}>
-                <Image
-                  source={{
-                    uri: ensureHttps(book.volumeInfo.imageLinks.smallThumbnail),
-                  }}
-                  style={styles.img}
-                />
-                <View style={styles.categoryContainer}>
-                  <View style={styles.categoryTextContainer}>
-                    <Text style={styles.categoryText}>
-                      {book.volumeInfo.title}
-                    </Text>
-                    <Text style={styles.categoryText}>
-                      {formatAuthors(book.volumeInfo.authors)}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </>
-      )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -282,6 +233,7 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingRight: 0,
   },
+  closeIcon: {padding: 8},
   input: {
     flex: 1,
     padding: 14,
