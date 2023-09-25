@@ -27,7 +27,7 @@ export const Login: React.FC<Props> = ({navigation}) => {
           <Text>Log in</Text>
         </TouchableButton>
         <Text style={styles.signUpText}>
-          Dont have an account?{' '}
+          Don't have an account?{' '}
           <Text fontWeight="700" style={styles.highlighted}>
             Sign up
           </Text>
