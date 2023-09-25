@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {Book} from './nytTypes';
+import type {Item} from './bookTypes';
 
 export type RootStackParamList = {
   Tabs?: NavigatorScreenParams<BottomTabParams>;
@@ -33,7 +34,8 @@ export type FeedTabScreenProps<T extends keyof FeedTabParams> =
   >;
 
 export type SearchTabParams = {
-  Search: undefined;
+  SearchPage: undefined;
+  Book: {book: Item};
 };
 
 export type SearchTabScreenProps<T extends keyof SearchTabParams> =
