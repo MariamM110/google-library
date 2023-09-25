@@ -5,7 +5,6 @@ import type {SearchTabScreenProps} from '../types';
 import {Text} from '../components/Text';
 import {theme} from '../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {th} from 'date-fns/locale';
 
 type Props = SearchTabScreenProps<'Book'>;
 
