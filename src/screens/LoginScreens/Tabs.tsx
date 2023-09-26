@@ -1,13 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {FeedStacks} from './FeedStacks';
-import {Search} from './Search';
-import {Bookmark} from './Bookmark';
-import {Account} from './Account';
+import {FeedStacks} from '../FeedScreens/FeedStacks';
+import {Bookmark} from '../BookmarkScreens/Bookmark';
+import {Account} from '../AccountScreens/Account';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {theme} from '../utils/themes';
-import {BottomTabParams} from '../types';
-import {SearchStacks} from './SearchStacks';
+import {theme} from '../../utils/themes';
+import {BottomTabParams} from '../../types';
+import {SearchStacks} from '../SearchScreens/SearchStacks';
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
 

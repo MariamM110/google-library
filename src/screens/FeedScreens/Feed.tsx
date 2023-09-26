@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import {Text} from '../components/Text';
+import {Text} from '../../components/Text';
 import {
   Image,
   FlatList,
@@ -10,10 +10,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {API_KEY} from '@env';
-import {Book, NYTResp} from '../nytTypes';
-import {theme} from '../utils/themes';
+import {Book, NYTResp} from '../../nytTypes';
+import {theme} from '../../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import type {FeedTabScreenProps} from '../types';
+import type {FeedTabScreenProps} from '../../types';
 
 type Props = FeedTabScreenProps<'FeedPage'>;
 

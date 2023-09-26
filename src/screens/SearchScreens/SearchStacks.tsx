@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {SearchTabParams} from '../types';
+import {SearchTabParams} from '../../types';
 import {Search} from './Search';
 import {SearchDetail} from './SearchDetail';
 

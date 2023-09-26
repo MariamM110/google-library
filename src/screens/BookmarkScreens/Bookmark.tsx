@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {BookmarkTabScreenProps} from '../types';
+import {BookmarkTabScreenProps} from '../../types';
 
 type Props = BookmarkTabScreenProps<'Bookmark'>;
 
