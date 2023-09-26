@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "colour"
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

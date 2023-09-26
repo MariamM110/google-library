@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  ListRenderItemInfo,
 } from 'react-native';
 import {theme} from '../../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -113,7 +114,31 @@ export const Search: React.FC<Props> = ({navigation}) => {
     }
     return authors;
   }
-  console.log();
+
+  const renderItem = React.useCallback(
+    ({item}: ListRenderItemInfo<Item>) => {
+      return (
+        <TouchableOpacity
+          style={styles.categoryList}
+          onPress={() => navigation.navigate('Book', {book: item})}>
+          <Image
+            source={{
+              uri: ensureHttps(item.volumeInfo.imageLinks.smallThumbnail),
+            }}
+            style={styles.img}
+          />
+          <View style={styles.categoryContainer}>
+            <View style={styles.categoryTextContainer}>
+              <Text>{item.volumeInfo.title}</Text>
+              <Text>{formatAuthors(item.volumeInfo.authors)}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    },
+    [navigation],
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchSection}>
@@ -182,28 +207,11 @@ export const Search: React.FC<Props> = ({navigation}) => {
       </ScrollView>
       <FlatList
         data={isSearchTriggered ? searched : categoryBooks}
-        keyExtractor={book => book.id}
+        keyExtractor={item => item.id}
         numColumns={2}
         style={styles.booksContainer}
         contentContainerStyle={styles.booksContentContainer}
-        renderItem={({item: book}) => (
-          <TouchableOpacity
-            style={styles.categoryList}
-            onPress={() => navigation.navigate('Book', {book: book})}>
-            <Image
-              source={{
-                uri: ensureHttps(book.volumeInfo.imageLinks.smallThumbnail),
-              }}
-              style={styles.img}
-            />
-            <View style={styles.categoryContainer}>
-              <View style={styles.categoryTextContainer}>
-                <Text>{book.volumeInfo.title}</Text>
-                <Text>{formatAuthors(book.volumeInfo.authors)}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
       />
     </SafeAreaView>
   );
