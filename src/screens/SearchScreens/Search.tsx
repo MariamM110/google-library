@@ -240,7 +240,6 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingRight: 0,
   },
-  closeIcon: {padding: 8},
   input: {
     flex: 1,
     padding: 14,

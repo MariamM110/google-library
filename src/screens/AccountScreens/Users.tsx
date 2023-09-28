@@ -8,13 +8,13 @@ import {
   View,
 } from 'react-native';
 import {AccountTabScreenProps} from '../../types';
-import {TouchableButton} from '../../components/Button';
 import {theme} from '../../utils/themes';
-import userData from '../../data/userData.json';
 
-type Props = AccountTabScreenProps<'AccountPage'>;
+type Props = AccountTabScreenProps<'Users'>;
 
-export const Account: React.FC<Props> = ({navigation}) => {
+export const Users: React.FC<Props> = ({route, navigation}) => {
+  const {user} = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imgContainer}>
@@ -28,30 +28,27 @@ export const Account: React.FC<Props> = ({navigation}) => {
         />
       </View>
       <View style={styles.profileWrapper}>
-        <Text style={styles.profileName}>{userData[0].username}</Text>
-        <Text style={styles.profileName}>{userData[0].bio}</Text>
-        <TouchableButton style={styles.editButton}>
-          <Text style={styles.buttonText}>Edit profile</Text>
-        </TouchableButton>
+        <Text style={styles.profileName}>{user.username}</Text>
+        <Text style={styles.profileName}>{user.bio}</Text>
       </View>
       <View style={styles.followWrapper}>
         <TouchableOpacity
           style={styles.followContainer}
           onPress={() => navigation.navigate('Follows', {state: 'followers'})}>
           <Text>Followers</Text>
-          <Text>{userData[0].followers}</Text>
+          <Text>{user.followers}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.followContainer}
           onPress={() => navigation.navigate('Follows', {state: 'following'})}>
           <Text>Following</Text>
-          <Text>{userData[0].following}</Text>
+          <Text>{user.following}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.followContainer}
           onPress={() => navigation.navigate('Follows', {state: 'books'})}>
           <Text>Books</Text>
-          <Text>{userData[0].books}</Text>
+          <Text>{user.books}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.descContainer}>
@@ -62,7 +59,7 @@ export const Account: React.FC<Props> = ({navigation}) => {
           />
           <View>
             <Text fontWeight="700">Favourite Book</Text>
-            <Text>{userData[0].favBook}</Text>
+            <Text>{user.favBook}</Text>
           </View>
         </View>
         <View style={styles.itemsContainer}>
@@ -72,7 +69,7 @@ export const Account: React.FC<Props> = ({navigation}) => {
           />
           <View>
             <Text fontWeight="700">Favourite Author</Text>
-            <Text>{userData[0].favAuthor}</Text>
+            <Text>{user.favAuthor}</Text>
           </View>
         </View>
         <View style={styles.itemsContainer}>
@@ -82,7 +79,7 @@ export const Account: React.FC<Props> = ({navigation}) => {
           />
           <View>
             <Text fontWeight="700">Favourite genre</Text>
-            <Text>{userData[0].favCategory}</Text>
+            <Text>{user.favCategory}</Text>
           </View>
         </View>
         <View style={styles.itemsContainer}>
@@ -92,7 +89,7 @@ export const Account: React.FC<Props> = ({navigation}) => {
           />
           <View>
             <Text fontWeight="700">Currently reading</Text>
-            <Text>{userData[0].current}</Text>
+            <Text>{user.current}</Text>
           </View>
         </View>
       </View>

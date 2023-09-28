@@ -5,7 +5,20 @@ import {
 } from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {Book} from './nytTypes';
-import type {Item} from './bookTypes';
+import type {Item, VolumeInfo} from './bookTypes';
+
+export interface User {
+  id: string;
+  username: string;
+  bio: string;
+  following: string;
+  followers: string;
+  books: string;
+  favBook: string;
+  favAuthor: string;
+  favCategory: string;
+  current: string;
+}
 
 export type RootStackParamList = {
   Tabs?: NavigatorScreenParams<BottomTabParams>;
@@ -56,7 +69,10 @@ export type BookmarkTabScreenProps<T extends keyof BookmarkTabParams> =
   >;
 
 export type AccountTabsParams = {
-  Account: undefined;
+  AccountPage: undefined;
+  Follows: {state: string};
+  Book: {book: VolumeInfo};
+  Users: {user: User};
 };
 
 export type AccountTabScreenProps<T extends keyof AccountTabsParams> =
