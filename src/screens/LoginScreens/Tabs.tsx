@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FeedStacks} from '../FeedScreens/FeedStacks';
 import {Bookmark} from '../BookmarkScreens/Bookmark';
-import {Account} from '../AccountScreens/Account';
+import {AccountStacks} from '../AccountScreens/AccountStacks';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../../utils/themes';
 import {BottomTabParams} from '../../types';
@@ -67,7 +67,7 @@ export function TabsNavigator() {
       />
       <Tab.Screen
         name="Account"
-        component={Account}
+        component={AccountStacks}
         options={{
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({focused, size}) => (
