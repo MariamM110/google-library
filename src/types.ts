@@ -59,7 +59,7 @@ export type SearchTabScreenProps<T extends keyof SearchTabParams> =
   >;
 
 export type BookmarkTabParams = {
-  Bookmark: undefined;
+  BookmarkPage: undefined;
 };
 
 export type BookmarkTabScreenProps<T extends keyof BookmarkTabParams> =

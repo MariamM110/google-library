@@ -1,15 +1,26 @@
-import React from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import type {SearchTabScreenProps} from '../../types';
+import type {AccountTabScreenProps, SearchTabScreenProps} from '../../types';
 import {Text} from '../../components/Text';
 import {theme} from '../../utils/themes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Item} from '../../bookTypes';
+import {useBookmark} from '../../context/bookmarkContext';
 
-type Props = SearchTabScreenProps<'Book'>;
+type Props = SearchTabScreenProps<'Book'> | AccountTabScreenProps<'Book'>;
 
 export const SearchDetail: React.FC<Props> = ({route}) => {
   const {book} = route.params;
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const {addBookToBookmark} = useBookmark();
 
   function ensureHttps(url: string) {
     if (url && url.startsWith('http://')) {
@@ -27,6 +38,18 @@ export const SearchDetail: React.FC<Props> = ({route}) => {
     }
     return authors;
   }
+
+  const saveBook = async (currentBook: Item) => {
+    try {
+      const bookId = currentBook.id;
+      const bookJson = JSON.stringify(currentBook);
+      await AsyncStorage.setItem(`savedBookKey_${bookId}`, bookJson);
+      setIsBookmarked(true);
+      console.log('Book saved successfully!');
+    } catch (error) {
+      console.error('Error saving book:', error);
+    }
+  };
 
   const renderHeader = React.useCallback(() => {
     return (
@@ -76,13 +99,19 @@ export const SearchDetail: React.FC<Props> = ({route}) => {
     return (
       <View style={styles.footer}>
         <MaterialCommunityIcons name="heart-outline" size={20} />
-        <View style={styles.bookmarkWrapper}>
-          <Text>Add to bookmark</Text>
-          <MaterialCommunityIcons name="bookmark" size={20} />
-        </View>
+        <TouchableOpacity
+          style={styles.bookmarkWrapper}
+          onPress={() => saveBook(book)}
+          disabled={isBookmarked}>
+          <Text>{isBookmarked ? 'Added to bookmark' : 'Add to bookmark'}</Text>
+          <MaterialCommunityIcons
+            name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
+            size={20}
+          />
+        </TouchableOpacity>
       </View>
     );
-  }, []);
+  }, [book, isBookmarked]);
 
   return (
     <View style={styles.container}>

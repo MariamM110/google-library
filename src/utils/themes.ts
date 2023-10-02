@@ -25,4 +25,4 @@ export const theme = {
   colourBeigeP40: '#807873',
   colourBeigeP50: '#665C5A',
   colourBeigeP60: '#5D594F',
-}
+};
